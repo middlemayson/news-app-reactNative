@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import { Post } from '../components/Post';
 
@@ -18,9 +19,15 @@ export const HomeScreen = ({ navigation }) => {
   const fetchPosts = () => {
     setIsLoading(true);
     axios
-      .get('https://65f3cc3a105614e654a127d4.mockapi.io/article')
+      .get('https://cdn.contentful.com/spaces/stypbb3yjiot/entries?access_token=LmAVL9v-jStaF0Dl37VlyxiRmtRo_xYlUReid5vRNiI')
       .then(({ data }) => {
-        setItems(data);
+        // Обрабатываем данные, чтобы получить только необходимые поля
+        const formattedData = data.items.map(item => ({
+          title: item.fields.title,
+          link: item.fields.link,
+          category: item.fields.category,
+        }));
+        setItems(formattedData);
       })
       .catch((err) => {
         console.log(err);
@@ -53,9 +60,8 @@ export const HomeScreen = ({ navigation }) => {
         refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchPosts} />}
         data={items}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('FullPost', { id: item.id, title: item.title })}>
-            <Post title={item.title} imageUrl={item.imageUrl} createdAt={item.createdAt} />
+          <TouchableOpacity onPress={() => Linking.openURL(item.link)}>
+            <Post title={item.title} category={item.category} link={item.link} />
           </TouchableOpacity>
         )}
       />
