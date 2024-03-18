@@ -1,13 +1,7 @@
 import React from 'react';
-import { HomeScreen } from './screens/Home';
 import { View, StatusBar } from 'react-native';
+import { Navigation } from './screens/Navigation';
 
 export default function App() {
-  
-  return (
-    <View>
-      <HomeScreen />
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <Navigation />;
 }
