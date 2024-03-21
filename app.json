@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Новости Казахстана",
-    "slug": "qaz-news-app",
+    "slug": "qaz-news",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -29,8 +29,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "7462a81e-7270-47ea-8d36-adbecdfc272a"
+        "projectId": "e06cef74-bd08-483b-a151-57a50978400e"
       }
-    }
+    },
+    "owner": "middlemayson"
   }
 }

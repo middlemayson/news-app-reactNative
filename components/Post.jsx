@@ -1,26 +1,22 @@
 import styled from 'styled-components/native';
-import {Image} from 'react-native'
 
 const PostView = styled.View`
   flex-direction: row;
   align-items: flex-start;
-  padding: 15px;
-`;
-
-const PostMore = styled.View`
-  width: 16px;
-  height: 16px;
-  margin-left: 16px;
   padding: 16px;
-  background-color: #CADF9E;
-  border-radius: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px;
+  border-color: #E6E6E6;
+  border-style: solid;
+  border-radius: 16px;
+  background-color: white;
+  margin-bottom: 8px;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 8px;
 `;
 
 const PostTitle = styled.Text`
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
 `;
 
@@ -37,16 +33,18 @@ const Postcategory = styled.Text`
   border: 1px;
   border-color: #CADF9E;
   border-style: solid;
-  border-radius: 16px;
-  padding: 4px 8px;
+  border-radius: 26px;
+  padding: 4px 10px;
+  text-align: center;
 `;
 
 const PostLink = styled.Text`
   font-size: 12px;
   color: #4A4A4A;
   background-color: #E6E6E6;
-  border-radius: 16px;
-  padding: 4px 8px;
+  border-radius: 26px;
+  padding: 4px 10px;
+  text-align: center;
 `;
 
 const PostFlex = styled.View`
@@ -56,15 +54,9 @@ const PostFlex = styled.View`
   margin-top: 8px;
 `;
 
-
 function getDomainName(link) {
-  // Удаляем "https://" и "http://"
   link = link.replace(/(^\w+:|^)\/\//, '');
-
-  // Получаем доменное имя (zakon.kz)
   const domainName = link.split('/')[0];
-
-  // Удаляем "www." если есть
   if (domainName.startsWith('www.')) {
     return domainName.slice(4);
   }
@@ -83,12 +75,6 @@ export const Post = ({ title, link, category }) => {
           <Postcategory>{category}</Postcategory>
         </PostFlex>
       </PostDetails>
-      <PostMore>
-          <Image
-            source={require('../assets/arrow.png')}
-            style={{ width: 16, height: 16 }}
-          />
-        </PostMore>
     </PostView>
   );
 };
