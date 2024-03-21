@@ -26,7 +26,7 @@ const TitleText = styled.Text`
   font-weight: 600;
 `;
 
-const CustomHeader = ({ title }) => {
+const CustomHeader = ({title }) => {
   return (
     <HeaderBlock>
       <TitleText>{title}</TitleText>
