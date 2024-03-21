@@ -9,18 +9,24 @@ import { Menu } from '../components/Menu';
 import styled from 'styled-components/native';
 
 const HeaderBlock = styled.View`
-  height: 64px;
+  height: 76px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: left;
+  gap: 16px;
   
 `;
 
 const NaviBtn = styled.View`
   width: 32px;
   height: 32px;
-left: 16px;
+  left: 16px;
+`;
+const TitleText = styled.Text`
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
 `;
 
 
@@ -34,7 +40,7 @@ const CustomHeader = ({ openDrawer, title }) => {
           <Image source={require('../assets/hamburger_icon.png')} style={{ width: 16, height: 16 }} />
         </TouchableOpacity>
       </NaviBtn>
-      <Text>{title}</Text>
+      <TitleText>{title}</TitleText>
     </HeaderBlock>
   );
 };
@@ -62,7 +68,18 @@ export const Navigation = () => {
           <Stack.Screen name="Home" component={HomeScreen} initialParams={{ title: 'Новости Казахстана' }} />
           <Stack.Screen name="NewsList" component={NewsListScreen} initialParams={{ title: 'Контакты СМИ' }} />
           <Stack.Screen name="Contacts" component={ContactsScreen} initialParams={{ title: 'Контакты' }} />
+          <Stack.Screen 
+          name="Menu" 
+          component={Menu} 
+          options={({ navigation }) => ({
+            headerShown: false,
+            headerLeft: () => (
+              <Menu onClose={() => {}} navigation={navigation} />
+            ),
+          })}
+        />
         </Stack.Navigator>
+        
       </NavigationContainer>
     </DrawerLayoutAndroid>
   );
