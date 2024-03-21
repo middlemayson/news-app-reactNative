@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { View, Text, Image, DrawerLayoutAndroid, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { Image, DrawerLayoutAndroid, TouchableOpacity, Text } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from './Home';
 import { NewsListScreen } from './NewsList';
@@ -9,20 +9,35 @@ import { Menu } from '../components/Menu';
 import styled from 'styled-components/native';
 
 const HeaderBlock = styled.View`
-  position: relative; /* Добавляем относительное позиционирование */
-  height: 10px; /* Установите высоту по вашему желанию */
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: left;
+  
 `;
 
 const NaviBtn = styled.View`
-  position: absolute; /* Добавляем абсолютное позиционирование */
-  top: 0; /* Поместите кнопку вверху */
-  left: 16px; /* Расположите кнопку слева с отступом */
-  width: 32px; /* Задайте ширину кнопки */
-  height: 32px; /* Задайте высоту кнопки */
+  width: 32px;
+  height: 32px;
+left: 16px;
 `;
 
 
 const Stack = createNativeStackNavigator();
+
+const CustomHeader = ({ openDrawer, title }) => {
+  return (
+    <HeaderBlock>
+      <NaviBtn>
+        <TouchableOpacity onPress={openDrawer}>
+          <Image source={require('../assets/hamburger_icon.png')} style={{ width: 16, height: 16 }} />
+        </TouchableOpacity>
+      </NaviBtn>
+      <Text>{title}</Text>
+    </HeaderBlock>
+  );
+};
 
 export const Navigation = () => {
   const drawerRef = useRef(null);
@@ -32,27 +47,23 @@ export const Navigation = () => {
   };
 
   return (
-      <DrawerLayoutAndroid
-        ref={drawerRef}
-        drawerWidth={200}
-        drawerPosition={'left'}
-        renderNavigationView={() => <Menu onClose={() => drawerRef.current.closeDrawer()} />}
-      >
-        <HeaderBlock>
-        <NaviBtn>
-            <TouchableOpacity onPress={openDrawer}>
-              <Image source={require('../assets/hamburger_icon.png')} style={{width:16, height:16}} />
-            </TouchableOpacity>
-          </NaviBtn>
-          </HeaderBlock>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Новости Казахстана' }} />
-              <Stack.Screen name="NewsList" component={NewsListScreen} options={{ title: 'Контакты СМИ' }} />
-              <Stack.Screen name="Contacts" component={ContactsScreen} options={{ title: 'Контакты' }} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        
-      </DrawerLayoutAndroid>
+    <DrawerLayoutAndroid
+      ref={drawerRef}
+      drawerWidth={200}
+      drawerPosition={'left'}
+      renderNavigationView={() => <Menu onClose={() => drawerRef.current.closeDrawer()} />}
+    >
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={({ route }) => ({
+            header: ({ navigation }) => <CustomHeader openDrawer={openDrawer} navigation={navigation} title={route.params?.title || 'Default Title'} />,
+          })}
+        >
+          <Stack.Screen name="Home" component={HomeScreen} initialParams={{ title: 'Новости Казахстана' }} />
+          <Stack.Screen name="NewsList" component={NewsListScreen} initialParams={{ title: 'Контакты СМИ' }} />
+          <Stack.Screen name="Contacts" component={ContactsScreen} initialParams={{ title: 'Контакты' }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </DrawerLayoutAndroid>
   );
 };
