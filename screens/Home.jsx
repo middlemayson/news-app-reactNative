@@ -21,7 +21,6 @@ export const HomeScreen = ({ navigation }) => {
     axios
       .get('https://cdn.contentful.com/spaces/stypbb3yjiot/entries?access_token=LmAVL9v-jStaF0Dl37VlyxiRmtRo_xYlUReid5vRNiI')
       .then(({ data }) => {
-        // Обрабатываем данные, чтобы получить только необходимые поля
         const formattedData = data.items.map(item => ({
           title: item.fields.title,
           link: item.fields.link,

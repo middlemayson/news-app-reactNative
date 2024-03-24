@@ -1,20 +1,16 @@
 import styled from 'styled-components/native';
-
 import React from 'react';
 import {
-  Alert,
   Text,
   FlatList,
-  View,
-  ActivityIndicator,
-  RefreshControl,
   TouchableOpacity,
   Linking,
 } from 'react-native';
 
 const PostView = styled.View`
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
+  gap: 16px;
   padding: 16px;
   border: 1px;
   border-color: #E6E6E6;
@@ -25,6 +21,11 @@ const PostView = styled.View`
   margin-left: 16px;
   margin-right: 16px;
   margin-top: 8px;
+`;
+
+const TextLine = styled.Text`
+  line-height: 24px;
+  text-decoration: underline;
 `;
 
 export const NewsListScreen = ( ) => {
@@ -56,13 +57,14 @@ export const NewsListScreen = ( ) => {
     const renderItem = ({ item }) => {
         return (
             <TouchableOpacity onPress={() => openLink(item.link)}>
-                <Text>«{item.name}»</Text>
+                <TextLine>«{item.name}»</TextLine>
             </TouchableOpacity>
         );
     };
 
   return (
     <PostView>
+      <Text>В приложении используются следующие источники новостей:</Text>
         <FlatList
         data={mediaData}
         renderItem={renderItem}
